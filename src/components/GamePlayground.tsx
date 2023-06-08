@@ -1,32 +1,18 @@
-import Container from './Container';
-import MainLogo from './MainLogo';
+import { PlayerState } from '../App';
+import PlayerTrack from './PlayerTrack';
 
 type GamePlaygroundProps = {
-  players: {
-    player1: {
-      name: string;
-      position: number;
-    };
-    player2: {
-      name: string;
-      position: number;
-    };
-    player3: {
-      name: string;
-      position: number;
-    };
-    player4: {
-      name: string;
-      position: number;
-    };
-  };
+  players: PlayerState;
 };
 
 function GamePlayground(props: GamePlaygroundProps) {
   return (
-    <Container>
-      <pre>{JSON.stringify(props.players)}</pre>
-    </Container>
+    <div className='mt-10 w-full min-w-[1200px]'>
+      <PlayerTrack playerState={props.players.player1} playerNum={1} />
+      <PlayerTrack playerState={props.players.player2} playerNum={2} />
+      <PlayerTrack playerState={props.players.player3} playerNum={3} />
+      <PlayerTrack playerState={props.players.player4} playerNum={4} />
+    </div>
   );
 }
 

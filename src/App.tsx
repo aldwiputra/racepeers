@@ -3,8 +3,27 @@ import RegisterForm from './components/RegisterForm';
 import GamePlayground from './components/GamePlayground';
 import { gameStateChanger } from './utils/gameStateChanger';
 import MainLogo from './components/MainLogo';
+import Container from './components/Container';
 
 export type GameState = 'Register' | 'Playing' | 'Finished';
+export type PlayerState = {
+  player1: {
+    name: string;
+    position: number;
+  };
+  player2: {
+    name: string;
+    position: number;
+  };
+  player3: {
+    name: string;
+    position: number;
+  };
+  player4: {
+    name: string;
+    position: number;
+  };
+};
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('Register');
@@ -32,16 +51,18 @@ function App() {
   }
 
   function changePlayersState(key: string, name: string) {
-    setPlayers(prev => ({ ...prev, [key]: name }));
+    setPlayers(prev => ({ ...prev, [key]: { ...prev[key as keyof PlayerState], name: name } }));
   }
 
   return (
     <main className='font-inter pt-14 px-10'>
-      <MainLogo />
-      {gameState === 'Register' && (
-        <RegisterForm changeGameState={changeGameState} changePlayersState={changePlayersState} />
-      )}
-      {gameState === 'Playing' && <GamePlayground players={players} />}
+      <Container>
+        <MainLogo />
+        {gameState === 'Register' && (
+          <RegisterForm changeGameState={changeGameState} changePlayersState={changePlayersState} />
+        )}
+        {gameState === 'Playing' && <GamePlayground players={players} />}
+      </Container>
     </main>
   );
 }

@@ -53,51 +53,48 @@ function RegisterForm(props: RegisterFormProps) {
   }, [formStateError, props, submitted, formState]);
 
   return (
-    <Container>
-      <form
-        className='max-w-[45ch] w-full mt-6'
-        onSubmit={e => {
-          e.preventDefault();
-          setFormStateError(FORM_ERROR_STATE_DEFAULT);
+    <form
+      className='max-w-[45ch] w-full mt-6'
+      onSubmit={e => {
+        e.preventDefault();
+        setFormStateError(FORM_ERROR_STATE_DEFAULT);
 
-          for (const key in formState) {
-            if (!formState[key as keyof FormState]) {
-              setFormStateError(prev => ({ ...prev, [key as keyof FormState]: 'Cannot be empty' }));
-            }
+        for (const key in formState) {
+          if (!formState[key as keyof FormState]) {
+            setFormStateError(prev => ({ ...prev, [key as keyof FormState]: 'Cannot be empty' }));
           }
+        }
 
-          setSubmitted(true);
-          console.log(formStateError);
-        }}>
-        <PlayerInput
-          playerNum={1}
-          formState={formState}
-          updateFormState={updateFormState}
-          error={formStateError[`player${1}`]}
-        />
-        <PlayerInput
-          playerNum={2}
-          formState={formState}
-          updateFormState={updateFormState}
-          error={formStateError[`player${2}`]}
-        />
-        <PlayerInput
-          playerNum={3}
-          formState={formState}
-          updateFormState={updateFormState}
-          error={formStateError[`player${3}`]}
-        />
-        <PlayerInput
-          playerNum={4}
-          formState={formState}
-          updateFormState={updateFormState}
-          error={formStateError[`player${4}`]}
-        />
-        <button className='w-full py-4 bg-sky-600 mt-8 rounded-md hover:bg-sky-700 ring-4 ring-sky-600/20'>
-          Submit
-        </button>
-      </form>
-    </Container>
+        setSubmitted(true);
+      }}>
+      <PlayerInput
+        playerNum={1}
+        formState={formState}
+        updateFormState={updateFormState}
+        error={formStateError[`player${1}`]}
+      />
+      <PlayerInput
+        playerNum={2}
+        formState={formState}
+        updateFormState={updateFormState}
+        error={formStateError[`player${2}`]}
+      />
+      <PlayerInput
+        playerNum={3}
+        formState={formState}
+        updateFormState={updateFormState}
+        error={formStateError[`player${3}`]}
+      />
+      <PlayerInput
+        playerNum={4}
+        formState={formState}
+        updateFormState={updateFormState}
+        error={formStateError[`player${4}`]}
+      />
+      <button className='w-full py-4 bg-sky-600 mt-8 rounded-md hover:bg-sky-700 ring-4 ring-sky-600/20'>
+        Submit
+      </button>
+    </form>
   );
 }
 
