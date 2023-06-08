@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlayerInput from './PlayerInput';
+import MainLogo from './MainLogo';
+import Container from './Container';
 
 export type FormState = {
   player1: string;
   player2: string;
   player3: string;
   player4: string;
+};
+
+type RegisterFormProps = {
+  changeGameState: () => void;
+  changePlayersState: (key: string, name: string) => void;
 };
 
 const FORM_ERROR_STATE_DEFAULT = {
@@ -15,7 +22,7 @@ const FORM_ERROR_STATE_DEFAULT = {
   player4: null,
 };
 
-function RegisterForm() {
+function RegisterForm(props: RegisterFormProps) {
   const [formState, setFormState] = useState({
     player1: '',
     player2: '',
@@ -23,17 +30,30 @@ function RegisterForm() {
     player4: '',
   });
   const [formStateError, setFormStateError] = useState(FORM_ERROR_STATE_DEFAULT);
+  const [submitted, setSubmitted] = useState(false);
 
   function updateFormState(playerNum: number, name: string) {
     setFormState(prev => ({ ...prev, [`player${playerNum}`]: name }));
   }
 
-  return (
-    <section className='max-w-[1200px] mx-auto flex flex-col items-center pt-14'>
-      <h1 className='font-semibold text-3xl px-4 py-2 ring-2 ring-gray-700 rounded-full bg-gray-800'>
-        🏁 Racepeer 🏁
-      </h1>
+  useEffect(() => {
+    if (
+      submitted &&
+      !formStateError.player1 &&
+      !formStateError.player2 &&
+      !formStateError.player3 &&
+      !formStateError.player4
+    ) {
+      for (const key in formState) {
+        props.changePlayersState(key, formState[key as keyof FormState]);
+      }
 
+      props.changeGameState();
+    }
+  }, [formStateError, props, submitted, formState]);
+
+  return (
+    <Container>
       <form
         className='max-w-[45ch] w-full mt-6'
         onSubmit={e => {
@@ -46,6 +66,7 @@ function RegisterForm() {
             }
           }
 
+          setSubmitted(true);
           console.log(formStateError);
         }}>
         <PlayerInput
@@ -76,7 +97,7 @@ function RegisterForm() {
           Submit
         </button>
       </form>
-    </section>
+    </Container>
   );
 }
 
