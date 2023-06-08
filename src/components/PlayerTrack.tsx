@@ -9,7 +9,7 @@ type PlayerTrackProps = {
 function PlayerTrack(props: PlayerTrackProps) {
   return (
     <div className='grid grid-flow-col'>
-      <div className='w-fit py-2 px-4 text-center min-w-[7ch] bg-gray-800 border-t-2 border-b-2 border-gray-700/20'>
+      <div className='py-2 px-4 text-center w-[7ch] bg-gray-800 border-t-2 border-b-2 border-gray-700/20'>
         {props.playerState.name}
       </div>
       {Array(24)
