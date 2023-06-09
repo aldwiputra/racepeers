@@ -112,7 +112,7 @@ function App() {
           <RegisterForm changeGameState={changeGameState} changePlayersState={changePlayersState} />
         )}
         {gameState === 'Playing' || gameState === 'Finished' ? (
-          <>
+          <div className='mb-10'>
             <GamePlayground players={players} />
             <div className='w-full text-center mt-8'>
               <p className={`font-semibold text-2xl ${gameState === 'Finished' && 'text-sky-600'}`}>
@@ -134,7 +134,7 @@ function App() {
             </div>
             {scoreBoard.length > 0 && <ScoreBoard players={players} scoreBoard={scoreBoard} />}
             {gameState === 'Playing' && <MoveHistory moveHistory={splicedMoveHistory} />}
-          </>
+          </div>
         ) : null}
       </Container>
     </main>

@@ -7,7 +7,7 @@ type ScoreBoardProps = {
 
 function ScoreBoard(props: ScoreBoardProps) {
   return (
-    <div className='text-center mt-8 px-8 py-4 bg-gray-800/20 rounded-md ring-2 ring-gray-700/30'>
+    <div className='text-center w-fit mx-auto mt-8 px-8 py-4 bg-gray-800/20 rounded-md ring-2 ring-gray-700/30'>
       <h5 className='text-center font-semibold text-2xl'>Race Result</h5>
       <div className='w-full h-[1px] bg-gray-700/30 mt-2'></div>
       <table className='text-center mx-auto mt-2'>
