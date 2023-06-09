@@ -6,7 +6,7 @@ This repository contains the code for the racing game app named Racepeers. The p
 
 ## Try App
 
-To try the deployed app you access it here: [https://w18-advanced-react-page-aldwiputra.vercel.app/](https://w18-advanced-react-page-aldwiputra.vercel.app/)
+To try the deployed app you access it here: [https://racepeers.vercel.app/](https://racepeers.vercel.app/)
 
 ## Installation
 
@@ -34,13 +34,13 @@ cd w18-advanced-react-page-aldwiputra
 ### Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Start the Development Server
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 The development server will start, and you can access the application by visiting http://localhost:5173 in your browser.
