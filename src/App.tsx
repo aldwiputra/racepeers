@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RegisterForm from './components/RegisterForm';
 import GamePlayground from './components/GamePlayground';
 import { gameStateChanger } from './utils/gameStateChanger';
 import MainLogo from './components/MainLogo';
 import Container from './components/Container';
 import { playersTurnChanger } from './utils/playersTurnChanger';
+import { capitalize } from './utils/capitalize';
+import { isPlayerFinished } from './utils/isPlayerFinished';
 
 export type GameState = 'Register' | 'Playing' | 'Finished';
 export type PlayersTurn = 'player1' | 'player2' | 'player3' | 'player4';
@@ -29,6 +31,7 @@ export type PlayerState = {
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('Register');
+  const [scoreBoard, setScoreBoard] = useState<PlayersTurn[]>([]);
   const [playersTurn, setPlayersTurn] = useState<PlayersTurn>('player1');
   const [players, setPlayers] = useState({
     player1: {
@@ -57,6 +60,22 @@ function App() {
     setPlayers(prev => ({ ...prev, [key]: { ...prev[key as keyof PlayerState], name: name } }));
   }
 
+  useEffect(() => {
+    if (
+      gameState === 'Playing' &&
+      isPlayerFinished(players, 'player1') &&
+      isPlayerFinished(players, 'player2') &&
+      isPlayerFinished(players, 'player3') &&
+      isPlayerFinished(players, 'player4')
+    ) {
+      changeGameState();
+    }
+
+    if (gameState === 'Playing' && players[playersTurn].position > 24) {
+      playersTurnChanger(playersTurn, setPlayersTurn);
+    }
+  }, [playersTurn, players]);
+
   return (
     <main className='font-inter pt-14 px-10'>
       <Container>
@@ -64,20 +83,43 @@ function App() {
         {gameState === 'Register' && (
           <RegisterForm changeGameState={changeGameState} changePlayersState={changePlayersState} />
         )}
-        {gameState === 'Playing' && <GamePlayground players={players} />}
+        {gameState === 'Playing' || gameState === 'Finished' ? (
+          <>
+            <GamePlayground players={players} />
+            <div className='w-full text-center mt-8'>
+              <p className={`font-semibold text-2xl ${gameState === 'Finished' && 'text-sky-600'}`}>
+                {gameState === 'Playing' && `=== ${capitalize(players[playersTurn].name)}'s Turn ===`}
+                {gameState === 'Finished' &&
+                  `🎉🎉🎉 ${capitalize(players[scoreBoard[0]].name)} Won 🎉🎉🎉`}
+              </p>
 
-        <div className='w-full text-center mt-8'>
-          {gameState === 'Playing' && (
-            <p className='font-semibold'>{`=== ${
-              players[playersTurn].name[0].toUpperCase() + players[playersTurn].name.substring(1)
-            }'s turn ===`}</p>
-          )}
-          <button
-            onClick={() => playersTurnChanger(playersTurn, setPlayersTurn)}
-            className='px-6 py-3 font-semibold bg-sky-600 rounded-md mt-4'>
-            Race Away!
-          </button>
-        </div>
+              <button
+                disabled={gameState === 'Finished'}
+                onClick={() => {
+                  if (players[playersTurn].position < 25) {
+                    const randomNum = Math.floor(Math.random() * 5);
+                    setPlayers(prev => {
+                      const copiedState = { ...prev };
+                      copiedState[playersTurn].position += randomNum;
+
+                      if (copiedState[playersTurn].position > 24) {
+                        setScoreBoard([...scoreBoard, playersTurn]);
+                      }
+
+                      return copiedState;
+                    });
+                  }
+                  playersTurnChanger(playersTurn, setPlayersTurn);
+                }}
+                className='px-6 py-3 font-semibold bg-sky-600 rounded-md mt-4 text-lg'>
+                {gameState === 'Playing' && 'Race Away!'}
+                {gameState === 'Finished' && 'Finished!'}
+              </button>
+            </div>
+            <pre>{JSON.stringify(scoreBoard)}</pre>
+          </>
+        ) : null}
+        {gameState === 'Finished' && <p>game Finished</p>}
       </Container>
     </main>
   );
