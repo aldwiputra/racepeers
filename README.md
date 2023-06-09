@@ -6,7 +6,7 @@ This repository contains the code for the racing game app named Racepeers. The p
 
 ## Try App
 
-To try the deployed app you access it here: [https://w18-react-page-aldwiputra.vercel.app/](https://w18-react-page-aldwiputra.vercel.app/)
+To try the deployed app you access it here: [https://w18-advanced-react-page-aldwiputra.vercel.app/](https://w18-advanced-react-page-aldwiputra.vercel.app/)
 
 ## Installation
 

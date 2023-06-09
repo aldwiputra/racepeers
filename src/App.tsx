@@ -8,6 +8,7 @@ import { playersTurnChanger } from './utils/playersTurnChanger';
 import { capitalize } from './utils/capitalize';
 import { isPlayerFinished } from './utils/isPlayerFinished';
 import MoveHistory from './components/MoveHistory';
+import ScoreBoard from './components/ScoreBoard';
 
 export type GameState = 'Register' | 'Playing' | 'Finished';
 export type PlayersTurn = 'player1' | 'player2' | 'player3' | 'player4';
@@ -120,7 +121,7 @@ function App() {
               </p>
 
               {gameState === 'Finished' && (
-                <p className='mt-2 text-gray-400'>Refresh or reload to start a new game.</p>
+                <p className='mt-2 text-gray-400'>⟳ Refresh or reload to start a new game.</p>
               )}
               <button
                 disabled={gameState === 'Finished'}
@@ -130,24 +131,7 @@ function App() {
                 {gameState === 'Finished' && 'Finished!'}
               </button>
             </div>
-            {scoreBoard.length > 0 && (
-              <div className=' text-center mt-8 px-8 py-4 bg-gray-800/20 rounded-md ring-2 ring-gray-700/75'>
-                <h5 className='text-center font-semibold text-2xl'>Race Result</h5>
-                <div className='w-full h-[1px] bg-slate-400/20 mt-2'></div>
-                <table className='text-center mx-auto mt-2'>
-                  <tr className='text-slate-500'>
-                    <th className='pr-4'>Rank</th>
-                    <th>Player</th>
-                  </tr>
-                  {scoreBoard.map((player, idx) => (
-                    <tr>
-                      <td className='pr-4'>{idx + 1}</td>
-                      <td>{players[player].name}</td>
-                    </tr>
-                  ))}
-                </table>
-              </div>
-            )}
+            {scoreBoard.length > 0 && <ScoreBoard players={players} scoreBoard={scoreBoard} />}
             {gameState === 'Playing' && <MoveHistory moveHistory={splicedMoveHistory} />}
           </>
         ) : null}
