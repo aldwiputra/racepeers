@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import PlayerInput from './PlayerInput';
-import MainLogo from './MainLogo';
-import Container from './Container';
 
 export type FormState = {
   player1: string;
