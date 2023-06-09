@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import RegisterForm from './components/RegisterForm';
-import GamePlayground from './components/GamePlayground';
 import { gameStateChanger } from './utils/gameStateChanger';
-import MainLogo from './components/MainLogo';
-import Container from './components/Container';
 import { playersTurnChanger } from './utils/playersTurnChanger';
 import { capitalize } from './utils/capitalize';
 import { isPlayerFinished } from './utils/isPlayerFinished';
+
+import RegisterForm from './components/RegisterForm';
+import GamePlayground from './components/GamePlayground';
+import MainLogo from './components/MainLogo';
+import Container from './components/Container';
 import MoveHistory from './components/MoveHistory';
 import ScoreBoard from './components/ScoreBoard';
 
@@ -66,24 +67,24 @@ function App() {
   }
 
   function handlePlayButton() {
-    if (players[playersTurn].position < 25) {
-      const randomNum = Math.floor(Math.random() * 5);
-      setMoveHistory([
-        `${capitalize(players[playersTurn].name)} moved ${randomNum} grids`,
-        ...moveHistory,
-      ]);
+    // if (players[playersTurn].position < 25) {
+    const randomNum = Math.floor(Math.random() * 5);
+    setMoveHistory([
+      `${capitalize(players[playersTurn].name)} moved ${randomNum} grids`,
+      ...moveHistory,
+    ]);
 
-      setPlayers(prev => {
-        const copiedState = { ...prev };
-        copiedState[playersTurn].position += randomNum;
+    setPlayers(prev => {
+      const copiedState = { ...prev };
+      copiedState[playersTurn].position += randomNum;
 
-        if (copiedState[playersTurn].position > 24) {
-          setScoreBoard([...scoreBoard, playersTurn]);
-        }
+      if (copiedState[playersTurn].position > 24) {
+        setScoreBoard([...scoreBoard, playersTurn]);
+      }
 
-        return copiedState;
-      });
-    }
+      return copiedState;
+    });
+    // }
     playersTurnChanger(playersTurn, setPlayersTurn);
   }
 
