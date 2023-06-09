@@ -4,8 +4,10 @@ import GamePlayground from './components/GamePlayground';
 import { gameStateChanger } from './utils/gameStateChanger';
 import MainLogo from './components/MainLogo';
 import Container from './components/Container';
+import { playersTurnChanger } from './utils/playersTurnChanger';
 
 export type GameState = 'Register' | 'Playing' | 'Finished';
+export type PlayersTurn = 'player1' | 'player2' | 'player3' | 'player4';
 export type PlayerState = {
   player1: {
     name: string;
@@ -27,6 +29,7 @@ export type PlayerState = {
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('Register');
+  const [playersTurn, setPlayersTurn] = useState<PlayersTurn>('player1');
   const [players, setPlayers] = useState({
     player1: {
       name: '',
@@ -62,6 +65,19 @@ function App() {
           <RegisterForm changeGameState={changeGameState} changePlayersState={changePlayersState} />
         )}
         {gameState === 'Playing' && <GamePlayground players={players} />}
+
+        <div className='w-full text-center mt-8'>
+          {gameState === 'Playing' && (
+            <p className='font-semibold'>{`=== ${
+              players[playersTurn].name[0].toUpperCase() + players[playersTurn].name.substring(1)
+            }'s turn ===`}</p>
+          )}
+          <button
+            onClick={() => playersTurnChanger(playersTurn, setPlayersTurn)}
+            className='px-6 py-3 font-semibold bg-sky-600 rounded-md mt-4'>
+            Race Away!
+          </button>
+        </div>
       </Container>
     </main>
   );

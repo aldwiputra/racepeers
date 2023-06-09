@@ -24,10 +24,16 @@ function PlayerTrack(props: PlayerTrackProps) {
             </span>
           </div>
         ))}
-      <div className='min-w-[5rem] h-full bg-white flex'>
+      <div className='relative min-w-[5rem] h-full bg-white flex'>
         <div className={`w-full ${props.playerNum % 2 !== 0 && 'bg-black'}`}></div>
         <div className={`w-full  ${props.playerNum % 2 === 0 && 'bg-black'}`}></div>
         <div className={`w-full  ${props.playerNum % 2 !== 0 && 'bg-black'}`}></div>
+        <span
+          className={`${
+            props.playerState.position === 25 ? 'opacity-1' : 'opacity-0'
+          } absolute text-3xl leading-none flip block`}>
+          🏎️
+        </span>
       </div>
     </div>
   );
