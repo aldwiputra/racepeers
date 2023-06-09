@@ -11,7 +11,7 @@ import MoveHistory from './components/MoveHistory';
 import ScoreBoard from './components/ScoreBoard';
 
 export type GameState = 'Register' | 'Playing' | 'Finished';
-export type PlayersTurn = 'player1' | 'player2' | 'player3' | 'player4';
+export type PlayersTurn = keyof PlayerState;
 export type PlayerState = {
   player1: {
     name: string;
