@@ -119,6 +119,9 @@ function App() {
                   `🎉🎉🎉 ${capitalize(players[scoreBoard[0]].name)} Won 🎉🎉🎉`}
               </p>
 
+              {gameState === 'Finished' && (
+                <p className='mt-2 text-gray-400'>Refresh or reload to start a new game.</p>
+              )}
               <button
                 disabled={gameState === 'Finished'}
                 onClick={handlePlayButton}
