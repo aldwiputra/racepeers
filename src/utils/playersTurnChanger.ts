@@ -6,18 +6,14 @@ export function playersTurnChanger(
   playersTurn: PlayersTurn,
   setPlayersTurn: React.Dispatch<React.SetStateAction<PlayersTurn>>
 ) {
-  const playerKeys = Object.keys(players);
+  const playerKeys = Object.keys(players) as PlayersTurn[];
   const idx = playerKeys.findIndex((element) => element === playersTurn);
 
-  console.log(playerKeys);
-  console.log(idx);
+  for (let i = idx + 1; i < idx + 4; i++) {
+    const playerNum = i < 4 ? i : i - 4;
 
-  for (let i = idx + 2; i < idx + 5; i++) {
-    const playerNum = i < 5 ? i : i - 4;
-    console.log(playerNum);
-
-    if (players[`player${playerNum}` as PlayersTurn].position <= 24) {
-      setPlayersTurn(`player${playerNum}` as PlayersTurn);
+    if (players[playerKeys[playerNum]].position <= 24) {
+      setPlayersTurn(playerKeys[playerNum] as PlayersTurn);
       break;
     }
   }
