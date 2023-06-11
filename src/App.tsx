@@ -63,7 +63,7 @@ function App() {
   }
 
   function changePlayersState(key: string, name: string) {
-    setPlayers(prev => ({ ...prev, [key]: { ...prev[key as keyof PlayerState], name: name } }));
+    setPlayers((prev) => ({ ...prev, [key]: { ...prev[key as keyof PlayerState], name: name } }));
   }
 
   function handlePlayButton() {
@@ -74,7 +74,7 @@ function App() {
       ...moveHistory,
     ]);
 
-    setPlayers(prev => {
+    setPlayers((prev) => {
       const copiedState = { ...prev };
       copiedState[playersTurn].position += randomNum;
 
@@ -85,7 +85,7 @@ function App() {
       return copiedState;
     });
     // }
-    playersTurnChanger(playersTurn, setPlayersTurn);
+    playersTurnChanger(players, playersTurn, setPlayersTurn);
   }
 
   useEffect(() => {
@@ -99,10 +99,10 @@ function App() {
       changeGameState();
     }
 
-    if (gameState === 'Playing' && players[playersTurn].position > 24) {
-      playersTurnChanger(playersTurn, setPlayersTurn);
-    }
-  }, [playersTurn, players]);
+    // if (gameState === 'Playing' && players[playersTurn].position > 24) {
+    //   playersTurnChanger(players, playersTurn, setPlayersTurn);
+    // }
+  }, [players]);
 
   return (
     <main className='font-inter pt-14 px-10'>
